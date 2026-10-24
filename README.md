@@ -1,13 +1,29 @@
-# 🪝 TV Hooks Manager for LG webOS (OLED G5 / webOS 24/25)
+# 🪝 TV Hooks Manager for LG webOS
 
 An open-source automation platform, signal router, and hook supervisor for rooted LG webOS Smart TVs. 
 
 Features a **native on-screen TV app** (controlled with your Magic Remote) and a **web dashboard** accessible from any PC or phone browser on your local network.
 
-[![webOS](https://img.shields.io/badge/webOS-11%20(24%2F25)-red.svg)](https://rootmy.tv)
+[![Tested on](https://img.shields.io/badge/Tested%20on-webOS%2026%20Latest%20(LG%20OLED%20G5)-orange.svg)](#-compatibility--hardware-tested)
+[![webOS Version](https://img.shields.io/badge/webOS-24%20%7C%2025%20%7C%2026%20(v11.2+)-red.svg)](#)
 [![Root Required](https://img.shields.io/badge/Root-Required-brightgreen.svg)](#-root-prerequisites--why-root-is-required)
 [![Platform](https://img.shields.io/badge/Platform-Node.js%20v20-blue.svg)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+
+---
+
+## 📺 Compatibility & Hardware Tested
+
+- **Tested Hardware**: 
+  - **TV**: LG OLED G5 65" (`OLED65G56LA.DTRQLJL`)
+  - **webOS Version**: **webOS 26 (Latest)** — internally reports webOS `11.2.0` (Firmware `43.21.77`)
+  - **Soundbar**: LG S95TR (9.1.5 Channels, WOW Orchestra, BLE GATT & eARC)
+  - **PC / GPU**: NVIDIA GeForce RTX 4090 (HDMI 2.1 4K 165Hz G-Sync HDR)
+- **Supported Platforms**:
+  - LG webOS 26 (2026 models)
+  - LG webOS 25 (2025 models)
+  - LG webOS 24 (2024 models)
+  - Backward compatible with webOS 4.x – 10.x running Node.js and webosbrew.
 
 ---
 
