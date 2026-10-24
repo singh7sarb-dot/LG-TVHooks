@@ -1,0 +1,6 @@
+{
+  "name": "org.webosbrew.tvhooks.service",
+  "version": "1.0.0",
+  "description": "TV Hooks Background Supervisor Service",
+  "main": "server.js"
+}

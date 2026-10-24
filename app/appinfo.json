@@ -1,0 +1,19 @@
+{
+  "id": "org.webosbrew.tvhooks",
+  "version": "1.0.0",
+  "vendor": "LG TV Hooks Community",
+  "type": "web",
+  "main": "index.html",
+  "title": "TV Hooks",
+  "appDescription": "Automations, signal routing, and soundbar input switcher for LG webOS",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "iconColor": "#000000",
+  "bgColor": "#000000",
+  "resolution": "1920x1080",
+  "visible": true,
+  "disableBackHistoryAPI": true,
+  "requiredPermissions": [
+    "all"
+  ]
+}

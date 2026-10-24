@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV Hooks Manager</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="oled-theme">
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">TV Hooks <span class="badge-pro">PRO</span></h1>
+          <p class="brand-subtitle">Automations & Signal Routing Manager</p>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div class="web-access-pill" title="Access this dashboard from any PC or phone on your home Wi-Fi">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>Web URL: <strong id="header-web-url" class="mono-badge">http://192.168.1.72:8989</strong></span>
+        </div>
+
+        <div class="system-chip">
+          <span class="chip-dot chip-pulse"></span>
+          <span class="chip-label" id="backend-status">Daemon Online</span>
+        </div>
+        <button class="btn btn-primary focusable" id="btn-add-hook" tabindex="1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Add Custom Hook
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Installed TV Hooks</h2>
+          <p class="section-desc">Manage system event listeners, audio switchers, and input routing hooks.</p>
+        </div>
+        <div class="filter-pills">
+          <button class="pill active focusable" id="filter-all" tabindex="2">All (<span id="count-all">0</span>)</button>
+          <button class="pill focusable" id="filter-active" tabindex="3">Active (<span id="count-active">0</span>)</button>
+          <button class="pill focusable" id="btn-refresh" tabindex="4">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6"></path>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Hooks Grid -->
+      <div class="hooks-grid" id="hooks-container">
+        <!-- Rendered dynamically by app.js -->
+        <div class="skeleton-card">Loading TV hooks...</div>
+      </div>
+    </main>
+
+    <!-- Live Log Modal / Drawer -->
+    <div class="modal-backdrop" id="modal-logs" style="display: none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title" id="log-modal-title">Hook Execution Logs</h3>
+            <p class="modal-subtitle" id="log-modal-subtitle">Live stream from TV background daemon</p>
+          </div>
+          <button class="modal-close focusable" id="btn-close-logs" tabindex="5">&times;</button>
+        </div>
+        <div class="modal-body terminal-body">
+          <pre id="terminal-content" class="terminal-text">Fetching logs...</pre>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary focusable" id="btn-refresh-logs" tabindex="6">Refresh Log</button>
+          <button class="btn btn-primary focusable" id="btn-done-logs" tabindex="7">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Hook Modal -->
+    <div class="modal-backdrop" id="modal-create" style="display: none;">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title">Create Custom TV Hook</h3>
+            <p class="modal-subtitle">Listen to webOS events and automate actions</p>
+          </div>
+          <button class="modal-close focusable" id="btn-close-create" tabindex="8">&times;</button>
+        </div>
+        <div class="modal-body form-body">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Hook Identifier (Slug)</label>
+              <input type="text" id="hook-id" class="form-input focusable" placeholder="e.g. game-mode-dimmer" tabindex="9">
+            </div>
+            <div class="form-group flex-2">
+              <label>Display Name</label>
+              <input type="text" id="hook-name" class="form-input focusable" placeholder="e.g. Auto Game Mode Dimmer" tabindex="10">
+            </div>
+            <div class="form-group flex-1">
+              <label>Script Runtime</label>
+              <select id="hook-type" class="form-input focusable" tabindex="11">
+                <option value="node">Node.js (Recommended)</option>
+                <option value="shell">Shell Script (.sh)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" id="hook-desc" class="form-input focusable" placeholder="What does this automation do?" tabindex="12">
+          </div>
+
+          <div class="form-group">
+            <div class="editor-header">
+              <label>Hook Script Code</label>
+              <div class="template-selector">
+                <span class="template-label">Load Template:</span>
+                <button type="button" class="btn-text focusable" id="tpl-app-listener" tabindex="13">Foreground App Listener</button>
+                <button type="button" class="btn-text focusable" id="tpl-timer" tabindex="14">Periodic Timer</button>
+              </div>
+            </div>
+            <textarea id="hook-code" class="form-textarea code-font focusable" rows="12" spellcheck="false" tabindex="15"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary focusable" id="btn-cancel-create" tabindex="16">Cancel</button>
+          <button class="btn btn-primary focusable" id="btn-save-hook" tabindex="17">Save & Activate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="app-toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

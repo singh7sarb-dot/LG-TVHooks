@@ -1,0 +1,9 @@
+{
+  "id": "org.webosbrew.tvhooks.service",
+  "description": "TV Hooks Background Supervisor Service",
+  "services": [
+    {
+      "name": "org.webosbrew.tvhooks.service"
+    }
+  ]
+}
